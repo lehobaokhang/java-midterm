@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Home | E-Shopper</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+<link th:href="@{/css/prettyPhoto.css}" rel="stylesheet">
+<link th:href="@{/css/price-range.css}" rel="stylesheet">
+<link th:href="@{/css/animate.css}" rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+<link th:href="@{/css/responsive.css}" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+<link rel="shortcut icon" th:href="@{/images/ico/favicon.ico}">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="images/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="images/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="images/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="images/ico/apple-touch-icon-57-precomposed.png">
+</head>
+<!--/head-->
+
+<body>
+	<header id="header">
+		<!--header-->
+		<div class="header-middle">
+			<!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a th:href="@{/}"><img src="images/home/logo.png" alt="" /></a>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+								<li><a th:if="${session.user != null}" th:text="${session.user.name}" href="#"><i class="fa fa-user"></i> Account</a></li>
+								<li><a th:if="${session.user != null}" th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
+								<li><a th:if="${session.user != null}" th:href="@{/logout}"><i class="fa fa-sign-out"></i>Logout</a></li>
+								<li><a th:if="${session.user == null}" th:href="@{/login}"><i class="fa fa-lock"></i>Login</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/header-middle-->
+
+		<div class="header-bottom">
+			<!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle"
+								data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+							</button>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<form method="get" th:action="@{/search}">
+								<input name="key" type="text" placeholder="Search" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/header-bottom-->
+	</header>
+	<!--/header-->
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<form method="get" action="/filter">
+							<h2>Loại</h2>
+							<div class="panel-group category-products" id="accordian">
+								<div class="brands-name">
+									<ul class="nav nav-pills nav-stacked">
+										<li th:each="category : ${categories}">
+											<input id="checkid-category" type="checkbox" th:value="${category.id}" style="margin-left:10%" name="category" th:checked="${categorySelected == category.id}"/>
+										    <label for="checkid-category" style="margin-left:3%" th:text="${category.name}"></label>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!--/category-products-->
+	
+							<div class="brands_products">
+								<!--brands_products-->
+								<h2>Thương Hiệu</h2>
+								<div class="brands-name">
+									<ul class="nav nav-pills nav-stacked">
+										<li th:each="brand : ${brands}">
+											<input id="checkid-brand" type="checkbox" th:value="${brand.id}" style="margin-left:10%" name="brand" th:checked="${brandSelected == brand.id}"/>
+										    <label for="checkid-brand" style="margin-left:3%" th:text="${brand.name}"></label>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!--/brands_products-->
+	
+							<div class="price-range">
+								<!--price-range-->
+								<h2>Giá</h2>
+								<ul class="nav nav-pills nav-stacked">
+									<li>
+										<input th:checked="${priceSelected == 1}" id="checkid-pricerange1" type="radio" value="1" style="margin-left:10%" name="price"/>
+									    <label for="checkid-pricerange1" style="margin-left:3%"> <10tr VNĐ </label>
+								   </li>
+								   <li>
+										<input th:checked="${priceSelected == 2}" id="checkid-pricerange2" type="radio" value="2" style="margin-left:10%" name="price"/>
+									    <label for="checkid-pricerange2" style="margin-left:3%"> >10tr VNĐ và <20tr VNĐ </label>
+								   </li>
+								   <li>
+										<input th:checked="${priceSelected == 3}" id="checkid-pricerange3" type="radio" value="3" style="margin-left:10%" name="price"/>
+									    <label for="checkid-pricerange3" style="margin-left:3%"> >20tr VNĐ và <30tr VNĐ </label>
+								   </li>
+								   <li>
+										<input th:checked="${priceSelected == 4}" id="checkid-pricerange4" type="radio" value="4" style="margin-left:10%" name="price"/>
+									    <label for="checkid-pricerange4" style="margin-left:3%"> >30tr VNĐ </label>
+								   </li>
+								</ul>
+							</div>
+							<!--/price-range-->
+							<div class="price-range">
+								<button type="submit" class="btn btn-default">Lọc</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="col-sm-9 padding-right">
+					<h2 class="title text-center">Sản phẩm</h2>
+					<div class="features_items">
+						<!--features_items-->
+						<div class="col-sm-4" th:each="product : ${products}">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+										<a th:href="@{/product/} + ${product.id}">
+											<img th:src="${product.image}" alt="" />
+											<h2 th:text="${product.price + ' VNĐ'}"></h2>
+											<p th:text="${product.name}"></p>
+										</a>
+										<a th:onclick="'addToCart(' + ${product.id} + ')'" class="btn btn-default add-to-cart"><i
+											class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--features_items-->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer id="footer">
+		<!--Footer-->
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights
+						reserved.</p>
+				</div>
+			</div>
+		</div>
+
+	</footer>
+	<!--/Footer-->
+
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.scrollUp.min.js"></script>
+	<script src="js/price-range.js"></script>
+	<script src="js/jquery.prettyPhoto.js"></script>
+	<script src="js/main.js"></script>
+	<script >
+		function addToCart(id) {
+			$.ajax({
+				url: '/cart',
+				type: 'POST',
+				data: {
+					product: id
+				},
+				success: function(data) {
+					if (!data) {
+						window.location.href = '/login';
+					} else {
+						alert("Thêm vào giỏ hàng thành công");
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>
