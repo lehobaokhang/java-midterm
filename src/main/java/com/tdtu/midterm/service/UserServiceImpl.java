@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void register(User user) {
 		user.setId(UUID.randomUUID().toString());
+		user.setRole(1);
 		userRepository.save(user);
 	}
 

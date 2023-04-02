@@ -40,6 +40,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a th:if="${session.user != null}" th:text="${session.user.name}" href="#"><i class="fa fa-user"></i> Account</a></li>
+								<li><a th:if="${session.user != null}" th:href="@{/order}"><i class="fa-bag"></i>Đơn hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/logout}"><i class="fa fa-sign-out"></i>Logout</a></li>
 								<li><a th:if="${session.user == null}" th:href="@{/login}"><i class="fa fa-lock"></i>Login</a></li>
@@ -157,9 +158,9 @@
 									<br/>
 									<label>Quantity:</label>
 									<input type="text" value="1" />
-									<button type="button" class="btn btn-fefault cart">
+									<button th:onclick="'addToCart(' + ${product.id} + ')'" type="button" class="btn btn-fefault cart">
 										<i class="fa fa-shopping-cart"></i>
-										Add to cart
+										Thêm
 									</button>
 								</span>								
 							</div><!--/product-information-->
@@ -170,7 +171,7 @@
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-								<li><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+								<li><a href="#reviews" data-toggle="tab">Reviews</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -180,21 +181,6 @@
 							</div>							
 							<div class="tab-pane fade" id="reviews" >
 								<div class="col-sm-12">
-									<ul>
-										<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-										<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-										<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
-									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-									<p><b>Write Your Review</b></p>
-									
-									<form action="#">
-										<textarea name="" ></textarea>
-										<b>Rating: </b> <img th:src="@{/images/product-details/rating.png}" alt="" />
-										<button type="button" class="btn btn-default pull-right">
-											Submit
-										</button>
-									</form>
 								</div>
 							</div>
 							
@@ -227,5 +213,23 @@
 	<script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/jquery.prettyPhoto.js}"></script>
     <script th:src="@{/js/main.js}"></script>
+    <script >
+		function addToCart(id) {
+			$.ajax({
+				url: '/cart',
+				type: 'POST',
+				data: {
+					product: id
+				},
+				success: function(data) {
+					if (!data) {
+						window.location.href = '/login';
+					} else {
+						alert("Thêm vào giỏ hàng thành công");
+					}
+				}
+			});
+		}
+	</script>
 </body>
 </html>

@@ -24,6 +24,9 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "role")
+	private int role;
+	
 	@OneToMany(mappedBy = "user")
     private List<Cart> carts;
 
@@ -77,6 +80,14 @@ public class User {
 
 	public void setCarts(List<Cart> carts) {
 		this.carts = carts;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
 	}
 
 	@Override

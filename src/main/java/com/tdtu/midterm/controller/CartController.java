@@ -34,7 +34,10 @@ public class CartController {
 			return "redirect:/login";
 		}
 		
-		List<Cart> carts = cartService.getCarts();
+		List<Cart> carts = cartService.getCarts(user.getId());
+		int total = cartService.getTotal(user.getId());
+		
+		model.addAttribute("total", total);
 		model.addAttribute("carts", carts);
 		
 		return "cart";

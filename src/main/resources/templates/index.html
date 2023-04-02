@@ -45,6 +45,8 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a th:if="${session.user != null}" th:text="${session.user.name}" href="#"><i class="fa fa-user"></i> Account</a></li>
+								<li><a th:if="${session.user != null && session.user.role == 0}" th:href="@{/manage}"><i class="fa-bag"></i>Quản lí sản phẩm</a></li>
+								<li><a th:if="${session.user != null}" th:href="@{/order}"><i class="fa-bag"></i>Đơn hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/logout}"><i class="fa fa-sign-out"></i>Logout</a></li>
 								<li><a th:if="${session.user == null}" th:href="@{/login}"><i class="fa fa-lock"></i>Login</a></li>
@@ -95,8 +97,8 @@
 								<div class="brands-name">
 									<ul class="nav nav-pills nav-stacked">
 										<li th:each="category : ${categories}">
-											<input id="checkid-category" type="checkbox" th:value="${category.id}" style="margin-left:10%" name="category" th:checked="${categorySelected == category.id}"/>
-										    <label for="checkid-category" style="margin-left:3%" th:text="${category.name}"></label>
+											<input th:id="${'checkid-category-' + category.id}" type="radio" th:value="${category.id}" style="margin-left:10%" name="category" th:checked="${categorySelected == category.id}"/>
+										    <label th:for="${'checkid-category-' + category.id}" style="margin-left:3%" th:text="${category.name}"></label>
 										</li>
 									</ul>
 								</div>
@@ -109,8 +111,8 @@
 								<div class="brands-name">
 									<ul class="nav nav-pills nav-stacked">
 										<li th:each="brand : ${brands}">
-											<input id="checkid-brand" type="checkbox" th:value="${brand.id}" style="margin-left:10%" name="brand" th:checked="${brandSelected == brand.id}"/>
-										    <label for="checkid-brand" style="margin-left:3%" th:text="${brand.name}"></label>
+											<input th:id="${'checkid-brand-' + brand.id}" type="radio" th:value="${brand.id}" style="margin-left:10%" name="brand" th:checked="${brandSelected == brand.id}"/>
+										    <label th:for="${'checkid-brand-' + brand.id}" style="margin-left:3%" th:text="${brand.name}"></label>
 										</li>
 									</ul>
 								</div>
