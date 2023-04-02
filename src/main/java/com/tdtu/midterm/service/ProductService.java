@@ -12,4 +12,10 @@ public interface ProductService {
 	public List<Product> search(String key);
 	
 	public List<Product> filter(String category, String brand, int bottom, int top);
+	
+	public void addProduct(Product p);
+	
+	public void removeProduct(int p);
+	
+	public void updateProduct(Product p);
 }

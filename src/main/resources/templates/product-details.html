@@ -40,6 +40,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a th:if="${session.user != null}" th:text="${session.user.name}" href="#"><i class="fa fa-user"></i> Account</a></li>
+								<li><a th:if="${session.user != null && session.user.role == 0}" th:href="@{/manage}"><i class="fa-bag"></i>Quản lí sản phẩm</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/order}"><i class="fa-bag"></i>Đơn hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/logout}"><i class="fa fa-sign-out"></i>Logout</a></li>
@@ -146,13 +147,12 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img th:src="${product.image}" alt="" />
+								<img th:src="@{${product.image}}" alt="" />
 							</div>
 						</div>
 						<div class="col-sm-7">
 							<div class="product-information"><!--/product-information-->
 								<h2 th:text="${product.name}"></h2>
-								<img src="images/product-details/rating.png" alt="" />
 								<span>
 									<span th:text="${product.price} + ' VNĐ'"></span>
 									<br/>

@@ -48,6 +48,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a th:if="${session.user != null}" th:text="${session.user.name}" href="#"><i class="fa fa-user"></i> Account</a></li>
+								<li><a th:if="${session.user != null && session.user.role == 0}" th:href="@{/manage}"><i class="fa-bag"></i>Quản lí sản phẩm</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/order}"><i class="fa-bag"></i>Đơn hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 								<li><a th:if="${session.user != null}" th:href="@{/logout}"><i class="fa fa-sign-out"></i>Logout</a></li>
@@ -116,8 +117,8 @@
 							<td class="cart_quantity">
 							</td>
 							<td class="cart_delete">
-							<a class="cart_quantity_delete" th:href="@{/cart/remove/} + ${product.id}"><i class="fa fa-edit"></i></a>
-								<a class="cart_quantity_delete" th:href="@{/cart/remove/} + ${product.id}"><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete" th:href="@{/manage/edit/} + ${product.id}"><i class="fa fa-edit"></i></a>
+								<a class="cart_quantity_delete" th:onclick="'confirmDelete(' + ${product.id} + ')'"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
 					</tbody>
@@ -143,5 +144,23 @@
 	<script src="js/jquery.scrollUp.min.js"></script>
     <script src="js/jquery.prettyPhoto.js"></script>
     <script src="js/main.js"></script>
+    <script>
+    	function confirmDelete(id) {
+    		if (confirm("Are you sure?")) {
+    			$.ajax({
+    				url: '/manage/remove',
+    				type: 'POST',
+    				data: {
+    					product: id
+    				},
+    				success: function(data) {
+    					if (data) {
+    						window.location.href = '/manage';
+    					}
+    				}
+    			});
+    		}
+    	}
+    </script>
 </body>
 </html>

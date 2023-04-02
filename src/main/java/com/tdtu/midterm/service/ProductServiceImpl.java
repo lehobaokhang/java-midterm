@@ -32,4 +32,19 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> filter(String category, String brand, int bottom, int top) {
 		return productRepository.filter(category, brand, bottom, top);
 	}
+
+	@Override
+	public void addProduct(Product p) {
+		productRepository.save(p);
+	}
+
+	@Override
+	public void removeProduct(int p) {
+		productRepository.deleteById(p);
+	}
+
+	@Override
+	public void updateProduct(Product p) {
+		productRepository.save(p);	
+	}
 }
